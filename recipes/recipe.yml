@@ -27,12 +27,80 @@ modules:
     install:
       skip-unavailable: true
       packages:
+        # Core
+        - polkit
+        - dbus-daemon
+        - dbus-tools
+        - dconf
+        - gsettings-desktop-schemas
+        - gnome-keyring
+        # Audio
+        - pipewire
+        - pipewire-libs-extra
+        - wireplumber
+        - pulseaudio-utils
+        # Network + VPN
+        - network-manager-applet
+        - NetworkManager-openvpn
+        - NetworkManager-openconnect
+        - NetworkManager-openvpn-gnome
+        - NetworkManager-openconnect-gnome
+        ## - Surfshark missing!
+        # Bluetooth
+        - bluez
+        - bluez-tools
+        - blueman
+        # File System
+        - nautilus
+        - gvfs-mtp
+        - gvfs-gphotos2
+        - gvfs-smb
+        - gvfs-nfs
+        - gvfs-fuse
+        - gvfs-archive
+        ## Note: Check if you really need gvfs
+        # Wayland
+        - qt5-wayland
+        - qt6-wayland
+        - xdg-desktop-portal-gnome
+        - xwayland-satellite
+        # Media codecs
+        - ffmpeg
+        - ffmpeg-libs
+        - ffmpegthumbnailer
+        - gstreamer1-plugins-bad
+        - gstreamer1-plugins-ugly
+        - libfdk-aac
+        - heif-pixbuf-loader
+        # Desktop Utils
+        - wl-clipboard
+        # Containers
+        - distrobox
+        - podman
+        - docker
+        # Shell + Terminal apps
         - micro
         - starship
         - fish
         - tmux
+        - foot
+        # Compositor Stack
         - niri
+        - greetd
+        - greetd-selinux
+        - cosmic-greeter
+        - swaync
+        - swww
+        - gtklock
+        - wofi
+        - fuzzel
         - dms
+        # - noctalia-shell
+        ## Do i really need all???
+        # Theming + UI polish
+        - adw-gtk3-theme
+        - nwg-look
+        ## Check if this is really what you want (gnome??)
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)

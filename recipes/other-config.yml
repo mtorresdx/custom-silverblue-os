@@ -1,0 +1,98 @@
+# https://github.com/LegitCamper/ublue-custom/blob/main/recipes/common-modules.yml
+
+modules:
+  - type: script
+    scripts:
+      - catppuccin.sh
+  
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        repo:
+          title: Flathub (system)
+        install:
+          - org.qutebrowser.qutebrowser
+          - com.vivaldi.Vivaldi
+          - com.github.tchx84.Flatseal
+          - re.sonny.Junction
+          - io.github.spacingbat3.webcord
+          - io.podman_desktop.PodmanDesktop
+          - org.angryip.ipscan
+          - org.gnome.Firmware
+          - org.onlyoffice.desktopeditors
+          - io.missioncenter.MissionCenter
+          - com.bitwarden.desktop
+          - com.github.iwalton3.jellyfin-media-player
+          - io.github.ilya_zlobintsev.LACT
+        remove:
+          - org.gnome.eog
+
+  - type: dnf
+    repos:
+      copr:
+        - ilyaz/LACT
+        - scottames/ghostty
+        - solopasha/hyprland
+    install:
+      packages:
+        - lact
+        - tailscale
+        - udisks2
+        - udiskie
+        - aylurs-gtk-shell
+        - swaybg
+        - kvantum
+        - papirus-icon-theme
+        - qt5-qtgraphicaleffects
+        - qt5-qtquickcontrols2
+        - qt5-qtsvg
+        - tlp-rdw
+        - tlp
+        - podman-compose
+        - alacritty
+        - ghostty
+        - htop
+        - stow
+        - wireshark
+
+  - type: systemd
+    system:
+      enabled:
+        - sddm.service
+        - tailscaled.service
+        - sshd.service
+        - tlp.service
+
+  # - type: containerfile
+  #   snippets:
+  #     - COPY --from=ghcr.io/ublue-os/akmods:main-43 /kernel-rpms /tmp/rpms/kernel
+  #     - RUN bash <(curl https://raw.githubusercontent.com/wayblueorg/wayblue/refs/heads/live/files/scripts/installsignedkernel.sh)      
+
+  #     - COPY --from=ghcr.io/ublue-os/akmods:main-43 /rpms /tmp/rpms
+  #     - RUN find /tmp/rpms
+  #     - RUN rpm -q ublue-os-akmods-addons || rpm-ostree install /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+  #     # TODO: get latest version via script
+  #     - RUN curl -L -o /tmp/rpms/kmods/xone-kmod-common.rpm "https://download.copr.fedorainfracloud.org/results/ublue-os/akmods/fedora-43-x86_64/09498341-xone-kmod-common/xone-kmod-common-1000.0.0.git.1114.82438c9a-1.fc43.noarch.rpm"
+  #     - RUN rpm-ostree install /tmp/rpms/kmods/kmod-xone*.rpm /tmp/rpms/kmods/xone-kmod-common.rpm 
+
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
+
+  - type: signing
+
+stages:
+  - name: bluebuild
+    from: docker.io/library/rust:1.77
+    modules: # same as the top-level modules key, but executed in the custom stage
+      - type: script
+        no-cache: true
+        snippets:
+          - cargo install --locked --all-features blue-build

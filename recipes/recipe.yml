@@ -86,6 +86,8 @@ modules:
         - foot
         # Compositor Stack
         - niri
+        - dms-cli
+        - dms-greeter
         - greetd
         - greetd-selinux
         - cosmic-greeter
